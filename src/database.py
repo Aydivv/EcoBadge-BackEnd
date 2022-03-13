@@ -13,6 +13,6 @@ try:
 except SQLAlchemyError as err:
     print("error", err.__cause__)
 
-session = _orm.sessionmaker(autocommit=False, autoFlush=False, bind=engine)
+session = _orm.sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = _declarative.declarative_base()

@@ -3,7 +3,7 @@ import pydantic as _pydantic
 import datetime as _dt
 
 class ReviewBase(_pydantic.BaseModel):
-    user_id: int
+    user_id: str
     business_id: int
     content: str
 
@@ -22,7 +22,7 @@ class UserBase(_pydantic.BaseModel):
     priority: int
 
 class UserCreate(UserBase):
-    id: int
+    id: str
 
 class User(UserBase):
     class Config:
