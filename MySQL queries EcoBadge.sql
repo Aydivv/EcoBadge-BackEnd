@@ -16,6 +16,9 @@ CREATE TABLE score(
     score INT,
     vegan BOOLEAN,
     singleUsePlastic BOOLEAN,
+    foodwasteCollection BOOLEAN,
+    localProduce BOOLEAN,
+    latest BOOLEAN,
     dateOfScore DATETIME,
     PRIMARY KEY (business_id,dateOfScore),
     FOREIGN KEY (business_id) REFERENCES business(id)
@@ -38,3 +41,9 @@ CREATE TABLE review(
     FOREIGN KEY (user_id) REFERENCES user(id),
     FOREIGN KEY (business_id) REFERENCES business(id)
 );
+
+CREATE VIEW businessScores
+AS 
+SELECT b.id,b.name,b.address,b.postcode,b.description,b.cuisine,b.scored,s.score
+FROM business as b, score as s 
+WHERE b.id = s.business_id and s.latest=true;

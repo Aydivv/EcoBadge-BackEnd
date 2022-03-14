@@ -11,7 +11,6 @@ class createReview(ReviewBase):
     pass
 
 class Review(ReviewBase):
-    user_name: str
     date_created: _dt.datetime
     class Config:
         orm_mode = True
@@ -36,8 +35,8 @@ class UserReviews(UserBase):
     pass
 
 class ScoreBase(_pydantic.BaseModel):
-    score: int
     business_id: int
+    score: int
     vegan: bool
     singleUsePlastic: bool
     foodwasteCollection: bool
@@ -47,34 +46,46 @@ class ScoreCreate(ScoreBase):
     latest = True
 
 class Score(ScoreBase):
+    latest: bool
     dateOfScore: _dt.datetime
     class Config:
         orm_mode = True
 
-class BusinessBase(_pydantic.BaseModel):
+class BusinessScore(_pydantic.BaseModel):
+    id: int
     name: str
     address: str
     postcode: str
-    desc: str
+    description: str
     cuisine: str
     scored: bool
-
-class BusinessCreate(BusinessBase):
-    number: str
-    email: str
-    website: str
-    pass
-
-class Business(BusinessBase):
     score: int
     class Config:
         orm_mode = True
 
-class BusinessProfile(BusinessBase):
-    scores: List[Score] = []
+class BusinessProfile(_pydantic.BaseModel):
+    id: int
+    name: str
+    address: str
+    postcode: str
+    description: str
+    cuisine: str
     number: str
     email: str
     website: str
-    reviews: List[Review] = []
+    scores: List[Score]
+    reviews: List[Review]
+    class Config:
+        orm_mode = True
+    
+class BusinessCreate(_pydantic.BaseModel):
+    name: str
+    address: str
+    postcode: str
+    pNumber: str
+    email: str
+    description: str
+    website: str
+    cuisine: str
     class Config:
         orm_mode = True

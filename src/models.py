@@ -11,34 +11,40 @@ class User(_db.Base):
     priority = _sql.Column(_sql.Integer)
 
 
-class Business():
+class Business(_db.Base):
     __tablename__ = "business"
-    id = _sql.Column(_sql.Integer, primary_key=True, index=True)
-    name = _sql.Column(_sql.String(255), index=True)
+    id = _sql.Column(_sql.Integer, primary_key=True, index=True, autoincrement=True)
+    name = _sql.Column(_sql.String(100), index=True)
     address = _sql.Column(_sql.String(255))
-    postcode = _sql.Column(_sql.String(255))
-    number = _sql.Column(_sql.String(255))
-    email = _sql.Column(_sql.String(255))
-    desc = _sql.Column(_sql.String(255))
+    postcode = _sql.Column(_sql.String(50))
+    pNumber = _sql.Column(_sql.String(20))
+    email = _sql.Column(_sql.String(100))
+    description = _sql.Column(_sql.String(255))
     website = _sql.Column(_sql.String(255))
     cuisine = _sql.Column(_sql.String(255))
     scored = _sql.Column(_sql.Boolean)
-    
-    
+
+class BusinessScore(_db.Base):
+    __tablename__ = "businessScore"
+    id = _sql.Column(_sql.Integer, primary_key=True, index=True, autoincrement=True)
+    name = _sql.Column(_sql.String(100), index=True)
+    address = _sql.Column(_sql.String(255))
+    postcode = _sql.Column(_sql.String(50))
+    description = _sql.Column(_sql.String(255))
+    cuisine = _sql.Column(_sql.String(255))
+    scored = _sql.Column(_sql.Boolean())
+    score = _sql.Column(_sql.Integer())
 
 class Review(_db.Base):
-    __tablename__ = "reviews"
+    __tablename__ = "review"
     id = _sql.Column(_sql.Integer, primary_key=True, index=True)
     content = _sql.Column(_sql.String(255),index=True,)
-    user_id = _sql.Column(_sql.String(50), _sql.ForeignKey("users.id"))
+    user_id = _sql.Column(_sql.String(50), _sql.ForeignKey("user.id"))
     business_id = _sql.Column(_sql.Integer, _sql.ForeignKey("business.id"))
     date_created = _sql.Column(_sql.DateTime, default=_dt.datetime.utcnow)
     reply_of = _sql.Column(_sql.Integer, default=_sql.null)
-    
-  
-    
 
-class Score():
+class Score(_db.Base):
     __tablename__ = "score"
     business_id = _sql.Column(_sql.Integer, _sql.ForeignKey("business.id"), primary_key=True, index=True)
     score = _sql.Column(_sql.Integer)
