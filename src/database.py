@@ -7,11 +7,7 @@ SQL_ALCHEMY_DATABASE_URL = "mysql+pymysql://root:jabalpur@localhost:3306/ecobadg
 
 engine = _sql.create_engine(SQL_ALCHEMY_DATABASE_URL)
 
-try:
-    engine.connect()
-    print("SQL connected")
-except SQLAlchemyError as err:
-    print("error", err.__cause__)
+
 
 session = _orm.sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

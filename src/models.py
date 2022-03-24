@@ -26,14 +26,18 @@ class Business(_db.Base):
 
 class BusinessScore(_db.Base):
     __tablename__ = "businessScore"
-    id = _sql.Column(_sql.Integer, primary_key=True, index=True, autoincrement=True)
+    business_id = _sql.Column(_sql.Integer, primary_key=True, index=True, autoincrement=True)
     name = _sql.Column(_sql.String(100), index=True)
     address = _sql.Column(_sql.String(255))
     postcode = _sql.Column(_sql.String(50))
     description = _sql.Column(_sql.String(255))
     cuisine = _sql.Column(_sql.String(255))
-    scored = _sql.Column(_sql.Boolean())
     score = _sql.Column(_sql.Integer())
+    vegan = _sql.Column(_sql.Boolean)
+    singleUsePlastic = _sql.Column(_sql.Boolean)
+    foodwasteCollection = _sql.Column(_sql.Boolean)
+    localProduce = _sql.Column(_sql.Boolean)
+    price = _sql.Column(_sql.Integer())
 
 class Review(_db.Base):
     __tablename__ = "review"
@@ -54,6 +58,4 @@ class Score(_db.Base):
     localProduce = _sql.Column(_sql.Boolean)
     latest = _sql.Column(_sql.Boolean)
     dateOfScore = _sql.Column(_sql.DateTime, default = _dt.datetime.utcnow, primary_key=True,index=True)
-
-    
-
+    price = _sql.Column(_sql.Integer)

@@ -41,9 +41,12 @@ class ScoreBase(_pydantic.BaseModel):
     singleUsePlastic: bool
     foodwasteCollection: bool
     localProduce: bool
+    price: int
 
 class ScoreCreate(ScoreBase):
     latest = True
+    class Config:
+        orm_mode = True
 
 class Score(ScoreBase):
     latest: bool
@@ -52,14 +55,28 @@ class Score(ScoreBase):
         orm_mode = True
 
 class BusinessScore(_pydantic.BaseModel):
+    business_id: int
+    name: str
+    address: str
+    postcode: str
+    description: str
+    cuisine: str
+    score: int
+    vegan: bool
+    singleUsePlastic: bool
+    foodwasteCollection: bool
+    localProduce: bool
+    price: int
+    class Config:
+        orm_mode = True
+
+class UnscoredBusiness(_pydantic.BaseModel):
     id: int
     name: str
     address: str
     postcode: str
     description: str
     cuisine: str
-    scored: bool
-    score: int
     class Config:
         orm_mode = True
 

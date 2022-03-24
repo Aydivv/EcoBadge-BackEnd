@@ -9,7 +9,24 @@ import models
 from typing import List
 import uvicorn
 
+#Get Businesses (with score) !!
+#Get Unscored businesses!!
+#Get Business Profile (with scores)!!
 
+#Create Business!!
+#Delete Business!!
+
+#Create score(Update score to latest, others to not. change business to scored)!!
+
+#Create user(with pic_path)
+#Delete User
+
+#Create review
+#Reply to review
+
+
+
+#Ge
 
 app = fastapi.FastAPI()
 
@@ -34,6 +51,14 @@ def get_businessProfile(
     response = schemas.BusinessProfile(id=b.id,name=b.name,address=b.address,postcode=b.postcode,description=b.description,cuisine=b.cuisine,number=b.pNumber,email=b.pNumber,website=b.website,reviews=reviews,scores=scores)
     return response
 
+@app.get("/unscored",response_model=List[schemas.UnscoredBusiness])
+def get_unscoredBusinesses(
+    skip: int = 0,
+    limit: int = 10,
+    db: orm.Session = fastapi.Depends(services.get_db)):
+    businesses = services.get_unscoredBusinesses(db=db,skip=skip,limit=limit)
+    return businesses
+
 @app.post("/business",response_model=schemas.BusinessCreate)
 def add_business(
     business: schemas.BusinessCreate,
@@ -41,37 +66,43 @@ def add_business(
 ):
     return services.create_business(db=db,business=business)
 
-@app.post("/users/",response_model=schemas.User)
-def create_user(user: schemas.UserCreate, db: orm.Session=fastapi.Depends(services.get_db)):
-    return services.create_user(db=db, user=user)
+@app.delete("/business/{business_id}")
+def delete_business(business_id: int,db: orm.Session = fastapi.Depends(services.get_db) ):
+    return services.delete_business(db=db,id=business_id)
+
+@app.post('/score',response_model=schemas.ScoreCreate)
+def create_score(score: schemas.ScoreCreate, db: orm.Session=fastapi.Depends(services.get_db)):
+    return services.create_score(db=db,score=score)
 
 
+# @app.post("/users/",response_model=schemas.User)
+# def create_user(user: schemas.UserCreate, db: orm.Session=fastapi.Depends(services.get_db)):
+#     return services.create_user(db=db, user=user)
 
-
-@app.get("/users",response_model=List[schemas.User])
-def read_users(
-    skip: int = 0,
-    limit: int = 10,
-    db: orm.Session = fastapi.Depends(services.get_db),
-):
-    users = services.get_users(db=db, skip=skip, limit=limit)
+# @app.get("/users",response_model=List[schemas.User])
+# def read_users(
+#     skip: int = 0,
+#     limit: int = 10,
+#     db: orm.Session = fastapi.Depends(services.get_db),
+# ):
+#     users = services.get_users(db=db, skip=skip, limit=limit)
     
-    return users
+#     return users
 
-@app.get("/scores",response_model=List[schemas.Score])
-def read_scores(
-    skip: int = 0,
-    limit: int = 10,
-    db: orm.Session = fastapi.Depends(services.get_db),
-):
-    scores = services.get_scores(db=db, skip=skip, limit=limit)
+# @app.get("/scores",response_model=List[schemas.Score])
+# def read_scores(
+#     skip: int = 0,
+#     limit: int = 10,
+#     db: orm.Session = fastapi.Depends(services.get_db),
+# ):
+#     scores = services.get_scores(db=db, skip=skip, limit=limit)
     
-    return scores
+#     return scores
 
 
-@app.post("/reviews/",response_model=schemas.Review)
-def create_review(review: schemas.createReview, db: orm.Session =fastapi.Depends(services.get_db)):
-    return services.create_review(db=db, review=review)
+# @app.post("/reviews/",response_model=schemas.Review)
+# def create_review(review: schemas.createReview, db: orm.Session =fastapi.Depends(services.get_db)):
+#     return services.create_review(db=db, review=review)
 
 
 if __name__ == "__main__":
