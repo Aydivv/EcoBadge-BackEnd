@@ -18,11 +18,13 @@ import uvicorn
 
 #Create score(Update score to latest, others to not. change business to scored)!!
 
-#Create user(with pic_path)
-#Delete User
+#Create user(with pic_path)!!
+#Delete User!!
 
 #Create review
 #Reply to review
+#User reviews
+
 
 
 
@@ -75,9 +77,14 @@ def create_score(score: schemas.ScoreCreate, db: orm.Session=fastapi.Depends(ser
     return services.create_score(db=db,score=score)
 
 
-# @app.post("/users/",response_model=schemas.User)
-# def create_user(user: schemas.UserCreate, db: orm.Session=fastapi.Depends(services.get_db)):
-#     return services.create_user(db=db, user=user)
+@app.post("/users/",response_model=schemas.User)
+def create_user(user: schemas.UserCreate, db: orm.Session=fastapi.Depends(services.get_db)):
+    return services.create_user(db=db, user=user)
+
+@app.delete("/users/{id}")
+def delete_user(id: str, db: orm.Session=fastapi.Depends(services.get_db)):
+    return services.delete_user(db=db,id=id)
+
 
 # @app.get("/users",response_model=List[schemas.User])
 # def read_users(

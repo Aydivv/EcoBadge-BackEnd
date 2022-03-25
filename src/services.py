@@ -54,14 +54,17 @@ def create_score(db:_orm.Session, score: _schemas.ScoreCreate):
     db.commit()
     return score
 
-
-
 def create_user(db: _orm.Session, user: _schemas.UserCreate):
     db_user = _models.User(name = user.name, email = user.email, priority = user.priority, id = user.id)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
     return db_user
+
+def delete_user(db: _orm.Session, id: str):
+    user = db.query(_models.User).filter(_models.User.id == id).delete()
+    db.commit()
+    return user
 
 # def create_review(db: _orm.Session, review: _schemas.createReview):
 #     db_review = _models.Review(content = review.content, user_id = review.user_id, business_id = review.business_id)
