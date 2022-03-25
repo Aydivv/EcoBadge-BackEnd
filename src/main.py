@@ -17,18 +17,17 @@ import uvicorn
 #Delete Business!!
 
 #Create score(Update score to latest, others to not. change business to scored)!!
+#Delete score
 
 #Create user(with pic_path)!!
 #Delete User!!
 
-#Create review
-#Reply to review
-#User reviews
+#Create review!!
+#Reply to review!!
+#Delete review!!
+#User profile with reviews!!
+#Get User
 
-
-
-
-#Ge
 
 app = fastapi.FastAPI()
 
@@ -76,16 +75,33 @@ def delete_business(business_id: int,db: orm.Session = fastapi.Depends(services.
 def create_score(score: schemas.ScoreCreate, db: orm.Session=fastapi.Depends(services.get_db)):
     return services.create_score(db=db,score=score)
 
+@app.delete('/score')
+def delete_score(score: schemas.ScoreDelete, db: orm.Session=fastapi.Depends(services.get_db)):
+    return services.delete_score(db=db,score=score)
 
 @app.post("/users/",response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: orm.Session=fastapi.Depends(services.get_db)):
     return services.create_user(db=db, user=user)
 
+@app.get("/users/{id}",response_model=schemas.User)
+def get_user(id: str, db: orm.Session=fastapi.Depends(services.get_db)):
+    return services.get_user(db=db,user_id=id)
+
 @app.delete("/users/{id}")
 def delete_user(id: str, db: orm.Session=fastapi.Depends(services.get_db)):
     return services.delete_user(db=db,id=id)
 
+@app.post("/review",response_model=schemas.Review)
+def create_review(rev: schemas.createReview, db: orm.Session=fastapi.Depends(services.get_db)):
+    return services.create_review(db=db,review = rev)
 
+@app.delete("/review/{id}")
+def delete_review(id: int, db: orm.Session=fastapi.Depends(services.get_db)):
+    return services.delete_review(db=db,review_id = id)
+
+@app.get("/userProfile/{id}",response_model=schemas.UserReviews)
+def get_userProfile(id: str, db: orm.Session=fastapi.Depends(services.get_db)):
+    return services.get_userProfile(db=db,user_id= id)
 # @app.get("/users",response_model=List[schemas.User])
 # def read_users(
 #     skip: int = 0,

@@ -6,22 +6,26 @@ class ReviewBase(_pydantic.BaseModel):
     user_id: str
     business_id: int
     content: str
+    reply_of: int = None
 
 class createReview(ReviewBase):
     pass
 
 class Review(ReviewBase):
+    id: int
     date_created: _dt.datetime
     class Config:
         orm_mode = True
 
 class UserBase(_pydantic.BaseModel):
+    id: str
     name: str
     email: str
     priority: int
+    
 
 class UserCreate(UserBase):
-    id: str
+    pass
 
 class User(UserBase):
     class Config:
@@ -54,6 +58,12 @@ class Score(ScoreBase):
     class Config:
         orm_mode = True
 
+class ScoreDelete(_pydantic.BaseModel):
+    business_id: int
+    dateOfScore: _dt.datetime
+    class Config:
+        orm_mode = True
+        
 class BusinessScore(_pydantic.BaseModel):
     business_id: int
     name: str
