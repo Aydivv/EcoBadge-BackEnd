@@ -1,0 +1,5 @@
+{
+    "scripts": {
+      "heroku-prebuild": "cd src && pip install -r requirements.txt",
+    }
+}
