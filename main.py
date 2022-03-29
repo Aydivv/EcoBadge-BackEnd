@@ -44,7 +44,7 @@ app.add_middleware(
 
 @app.get("/")
 def root():
-    return _responses.RedirectResponse("/redoc")
+    return _responses.RedirectResponse("/docs")
 
 @app.get("/businesses",response_model=List[schemas.BusinessScore])
 def get_businesses(
