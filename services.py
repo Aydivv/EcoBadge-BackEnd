@@ -32,6 +32,8 @@ def get_business(db:_orm.Session, business_id: int):
     return db.query(_models.Business).filter(_models.Business.id == business_id).first()
 
 def delete_business(db:_orm.Session, id: int):
+    db.query(_models.Score).filter(_models.Score.business_id == id).delete()
+    db.query(_models.Review).filter(_models.Review.business_id == id).delete()
     db.query(_models.Business).filter(_models.Business.id == id).delete()
     db.commit()
     return {"Deleted":True}
@@ -70,6 +72,7 @@ def get_user(db: _orm.Session, user_id: str):
     
 
 def delete_user(db: _orm.Session, id: str):
+    db.query(_models.Review).filter(_models.Review.user_id == id).delete()
     user = db.query(_models.User).filter(_models.User.id == id).delete()
     db.commit()
     return user
@@ -82,6 +85,7 @@ def create_review(db= _orm.Session, review = _schemas.createReview):
 
 def delete_review(db= _orm.Session, review_id = int):
     db.query(_models.Review).filter(_models.Review.id == review_id).delete()
+    db.query(_models.Review).filter(_models.Review.reply_of == review_id).delete()
     db.commit()
     return {"Review "+str(review_id): "deleted"}
 
