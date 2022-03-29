@@ -8,6 +8,8 @@ import schemas
 import models
 from typing import List
 import uvicorn
+import starlette.responses as _responses
+from fastapi.middleware.cors import CORSMiddleware
 
 #Get Businesses (with score) !!
 #Get Unscored businesses!!
@@ -28,8 +30,21 @@ import uvicorn
 #User profile with reviews!!
 #Get User
 
-
 app = fastapi.FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.get("/")
+def root():
+    return _responses.RedirectResponse("/redoc")
 
 @app.get("/businesses",response_model=List[schemas.BusinessScore])
 def get_businesses(
