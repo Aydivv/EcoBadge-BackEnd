@@ -117,31 +117,6 @@ def delete_review(id: int, db: orm.Session=fastapi.Depends(services.get_db)):
 @app.get("/userProfile/{id}",response_model=schemas.UserReviews)
 def get_userProfile(id: str, db: orm.Session=fastapi.Depends(services.get_db)):
     return services.get_userProfile(db=db,user_id= id)
-# @app.get("/users",response_model=List[schemas.User])
-# def read_users(
-#     skip: int = 0,
-#     limit: int = 10,
-#     db: orm.Session = fastapi.Depends(services.get_db),
-# ):
-#     users = services.get_users(db=db, skip=skip, limit=limit)
-    
-#     return users
-
-# @app.get("/scores",response_model=List[schemas.Score])
-# def read_scores(
-#     skip: int = 0,
-#     limit: int = 10,
-#     db: orm.Session = fastapi.Depends(services.get_db),
-# ):
-#     scores = services.get_scores(db=db, skip=skip, limit=limit)
-    
-#     return scores
-
-
-# @app.post("/reviews/",response_model=schemas.Review)
-# def create_review(review: schemas.createReview, db: orm.Session =fastapi.Depends(services.get_db)):
-#     return services.create_review(db=db, review=review)
-
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
