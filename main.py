@@ -64,7 +64,7 @@ def get_businessProfile(
     reviews = services.get_review_of_business(db=db,business_id=business_id)
     scores = services.get_score_of_business(db=db,business_id=business_id)
 
-    response = schemas.BusinessProfile(id=b.id,name=b.name,address=b.address,postcode=b.postcode,description=b.description,cuisine=b.cuisine,number=b.pNumber,email=b.pNumber,website=b.website,reviews=reviews,scores=scores)
+    response = schemas.BusinessProfile(id=b.id,name=b.name,address=b.address,postcode=b.postcode,description=b.description,cuisine=b.cuisine,number=b.pNumber,email=b.email,website=b.website,reviews=reviews,scores=scores)
     return response
 
 @app.get("/unscored",response_model=List[schemas.UnscoredBusiness])
