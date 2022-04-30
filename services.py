@@ -35,6 +35,8 @@ def delete_business(db:_orm.Session, id: int):
     db.query(_models.Score).filter(_models.Score.business_id == id).delete()
     db.query(_models.Review).filter(_models.Review.business_id == id).delete()
     db.query(_models.Business).filter(_models.Business.id == id).delete()
+    user = db.query(_models.User).filter(_models.User.business_id == id).first()
+    user.business_id = None
     db.commit()
     return {"Deleted":True}
 
@@ -70,6 +72,13 @@ def create_user(db: _orm.Session, user: _schemas.UserCreate):
 def get_user(db: _orm.Session, user_id: str):
     return db.query(_models.User).filter(_models.User.id == user_id).first()
     
+def update_user(db: _orm.Session, user: _schemas.UserUpdate, id: str):
+    db_user = db.query(_models.User).filter(_models.User.id == id).first()
+    db_user.business_id = user.business_id
+    db_user.name = user.name
+    db_user.priority = user.priority
+    db.commit()
+    return user
 
 def delete_user(db: _orm.Session, id: str):
     db.query(_models.Review).filter(_models.Review.user_id == id).delete()
@@ -94,13 +103,6 @@ def get_userProfile(db= _orm.Session, user_id = str):
     revs = db.query(_models.Review).filter(_models.Review.user_id == user_id).all()
     response = _schemas.UserReviews(id=user.id,name=user.name,email=user.email,priority=user.priority,reviews=revs)
     return response
-# def create_review(db: _orm.Session, review: _schemas.createReview):
-#     db_review = _models.Review(content = review.content, user_id = review.user_id, business_id = review.business_id)
-#     db.add(db_review)
-#     db.commit()
-#     db.refresh(db_review)
-#     return db_review
-
 
 def get_users(db: _orm.Session, skip: int = 0, limit: int = 100):
     return db.query(_models.User).offset(skip).limit(limit).all()

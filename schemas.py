@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 import pydantic as _pydantic
 import datetime as _dt
 
@@ -18,21 +18,32 @@ class Review(ReviewBase):
         orm_mode = True
 
 class UserBase(_pydantic.BaseModel):
-    id: str
     name: str
-    email: str
     priority: int
     
 
 class UserCreate(UserBase):
+    id: str
+    email: str
     pass
 
 class User(UserBase):
+    id: str
+    email: str
+    business_id: Optional[int] = None
     class Config:
         orm_mode = True
     pass
 
+class UserUpdate(UserBase):
+    class Config:
+        orm_mode = True
+    business_id: Optional[int] = None
+
 class UserReviews(UserBase):
+    id: str
+    email: str
+    business_id: Optional[int] = None
     reviews: List[Review] = []
     class Config:
         orm_mode = True

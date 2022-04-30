@@ -106,6 +106,10 @@ def get_user(id: str, db: orm.Session=fastapi.Depends(services.get_db)):
 def delete_user(id: str, db: orm.Session=fastapi.Depends(services.get_db)):
     return services.delete_user(db=db,id=id)
 
+@app.put("/users/{id}")
+def update_user(user: schemas.UserUpdate, id: str, db: orm.Session=fastapi.Depends(services.get_db)):
+    return services.update_user(db=db,user=user,id=id)
+
 @app.post("/review",response_model=schemas.Review)
 def create_review(rev: schemas.createReview, db: orm.Session=fastapi.Depends(services.get_db)):
     return services.create_review(db=db,review = rev)

@@ -9,6 +9,7 @@ class User(_db.Base):
     email = _sql.Column(_sql.String(255), unique=True, index=True)
     name = _sql.Column(_sql.String(255))
     priority = _sql.Column(_sql.Integer)
+    business_id = _sql.Column(_sql.Integer)
 
 
 class Business(_db.Base):
