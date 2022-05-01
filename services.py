@@ -48,6 +48,7 @@ def delete_business(db:_orm.Session, id: int):
     user = db.query(_models.User).filter(_models.User.business_id == id).first()
     if(user):
         user.business_id = None
+        user.priority = 0
     db.commit()
     return {"Deleted":True}
 
