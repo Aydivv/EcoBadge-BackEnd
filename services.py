@@ -38,6 +38,9 @@ def get_score_of_business(db: _orm.Session, business_id: int):
 def get_business(db:_orm.Session, business_id: int):
     return db.query(_models.Business).filter(_models.Business.id == business_id).first()
 
+def get_recentBusiness(db:_orm.Session):
+    return db.query(_models.Business).order_by(_models.Business.id.desc()).first()
+
 def delete_business(db:_orm.Session, id: int):
     db.query(_models.Score).filter(_models.Score.business_id == id).delete()
     db.query(_models.Review).filter(_models.Review.business_id == id).delete()

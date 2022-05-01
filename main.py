@@ -75,6 +75,12 @@ def get_unscoredBusinesses(
     businesses = services.get_unscoredBusinesses(db=db,skip=skip,limit=limit)
     return businesses
 
+@app.get("/recent", response_model=schemas.UnscoredBusiness)
+def getRecentbusiness(
+    db: orm.Session = fastapi.Depends(services.get_db)
+):
+    return services.get_recentBusiness(db=db)
+
 @app.post("/business",response_model=schemas.BusinessCreate)
 def add_business(
     business: schemas.BusinessCreate,
