@@ -14,6 +14,8 @@ class createReview(ReviewBase):
 class Review(ReviewBase):
     id: int
     date_created: _dt.datetime
+    user_name: Optional[str] = None
+    business_name: Optional[str] = None
     class Config:
         orm_mode = True
 

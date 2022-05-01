@@ -23,7 +23,14 @@ def get_unscoredBusinesses(db: _orm.Session, skip: int = 0, limit: int = 100):
     return db.query(_models.Business).filter(_models.Business.scored==0).offset(skip).limit(limit).all()
 
 def get_review_of_business(db: _orm.Session, business_id: int):
-    return db.query(_models.Review).filter(_models.Review.business_id == business_id).all()
+    revs = db.query(_models.Review).filter(_models.Review.business_id == business_id).all()
+    reviews = []
+    for rev in revs:
+        user = db.query(_models.User).filter(_models.User.id == rev.user_id).first()
+        business = db.query(_models.Business).filter(_models.Business.id == rev.business_id).first()
+        temp = _schemas.Review(user_id = rev.user_id,content = rev.content,business_id = rev.business_id,reply_of = rev.reply_of,id = rev.id,date_created = rev.date_created,user_name = user.name, business_name = business.name)
+        reviews.append(temp)
+    return reviews
 
 def get_score_of_business(db: _orm.Session, business_id: int):
     return db.query(_models.Score).filter(_models.Score.business_id == business_id).all()
@@ -101,7 +108,15 @@ def delete_review(db= _orm.Session, review_id = int):
 def get_userProfile(db= _orm.Session, user_id = str):
     user = db.query(_models.User).filter(_models.User.id == user_id).first()
     revs = db.query(_models.Review).filter(_models.Review.user_id == user_id).all()
-    response = _schemas.UserReviews(id=user.id,name=user.name,email=user.email,priority=user.priority,reviews=revs)
+
+    reviews = []
+    for rev in revs:
+        user = db.query(_models.User).filter(_models.User.id == rev.user_id).first()
+        business = db.query(_models.Business).filter(_models.Business.id == rev.business_id).first()
+        temp = _schemas.Review(user_id = rev.user_id,content = rev.content,business_id = rev.business_id,reply_of = rev.reply_of,id = rev.id,date_created = rev.date_created,user_name = user.name, business_name = business.name)
+        reviews.append(temp)
+
+    response = _schemas.UserReviews(id=user.id,name=user.name,email=user.email,priority=user.priority,reviews=reviews)
     return response
 
 def get_users(db: _orm.Session, skip: int = 0, limit: int = 100):
