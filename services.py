@@ -73,7 +73,6 @@ def update_business(db:_orm.Session, id: int ,business: _schemas.BusinessCreate)
     db.refresh(biz)
     return biz
 
-
 def create_score(db:_orm.Session, score: _schemas.ScoreCreate):
     scores = db.query(_models.Score).filter(and_(_models.Score.business_id == score.business_id, _models.Score.latest == 1)).first()
     if(scores):    
