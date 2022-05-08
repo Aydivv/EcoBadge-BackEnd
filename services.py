@@ -59,6 +59,21 @@ def create_business(db:_orm.Session, business: _schemas.BusinessCreate):
     db.refresh(biz)
     return biz
 
+def update_business(db:_orm.Session, id: int ,business: _schemas.BusinessCreate):
+    biz = db.query(_models.Business).filter(_models.Business.id == id).first()
+    biz.name = business.name
+    biz.address = business.address
+    biz.cuisine = business.cuisine
+    biz.postcode = business.postcode
+    biz.pNumber = business.pNumber
+    biz.email = business.email
+    biz.description = business.description
+    biz.website = business.website
+    db.commit()
+    db.refresh(biz)
+    return biz
+
+
 def create_score(db:_orm.Session, score: _schemas.ScoreCreate):
     scores = db.query(_models.Score).filter(and_(_models.Score.business_id == score.business_id, _models.Score.latest == 1)).first()
     if(scores):    
