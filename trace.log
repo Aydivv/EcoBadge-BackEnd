@@ -1,0 +1,14 @@
+2022-05-10T20:29:52.110Z: *******************************************
+2022-05-10T20:29:52.111Z: * Executing the Microsoft IOT Trace tool. *
+2022-05-10T20:29:52.111Z: *******************************************
+2022-05-10T20:29:52.111Z: 
+2022-05-10T20:29:52.111Z: --- Executing network tests ---
+2022-05-10T20:29:52.121Z: 
+2022-05-10T20:29:52.122Z: Starting DNS resolution for host 'www.microsoft.com'...
+2022-05-10T20:29:52.150Z: --> Successfully resolved DNS to 104.96.197.170.
+2022-05-10T20:29:52.150Z: "www.microsoft.com" using address: 104.96.197.170
+2022-05-10T20:29:52.150Z: 
+2022-05-10T20:29:52.150Z: Pinging IPV4 address '104.96.197.170'...
+2022-05-10T20:29:52.185Z: --> Successfully pinged 104.96.197.170
+2022-05-10T20:29:52.185Z: 
+2022-05-10T20:29:52.185Z: Sending https request to 'https://www.microsoft.com/'

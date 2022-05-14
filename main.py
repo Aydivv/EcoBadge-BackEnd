@@ -93,8 +93,8 @@ def delete_business(business_id: int,db: orm.Session = fastapi.Depends(services.
     return services.delete_business(db=db,id=business_id)
 
 @app.put("/business/{business_id}",response_model=schemas.BusinessCreate)
-def update_business(business: schemas.BusinessCreate, id: int, db: orm.Session=fastapi.Depends(services.get_db)):
-    return services.update_business(db=db,id=id,business=business)
+def update_business(business: schemas.BusinessCreate, business_id: int, db: orm.Session=fastapi.Depends(services.get_db)):
+    return services.update_business(db=db,id=business_id,business=business)
 
 @app.post('/score',response_model=schemas.ScoreCreate)
 def create_score(score: schemas.ScoreCreate, db: orm.Session=fastapi.Depends(services.get_db)):
