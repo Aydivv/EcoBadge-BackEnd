@@ -135,7 +135,7 @@ def get_userProfile(db= _orm.Session, user_id = str):
         temp = _schemas.Review(user_id = rev.user_id,content = rev.content,business_id = rev.business_id,reply_of = rev.reply_of,id = rev.id,date_created = rev.date_created,user_name = user.name, business_name = business.name)
         reviews.append(temp)
 
-    response = _schemas.UserReviews(id=user.id,name=user.name,email=user.email,priority=user.priority,reviews=reviews)
+    response = _schemas.UserReviews(id=user.id,name=user.name,email=user.email,priority=user.priority,business_id=user.business_id,reviews=reviews)
     return response
 
 def get_users(db: _orm.Session, skip: int = 0, limit: int = 100):
