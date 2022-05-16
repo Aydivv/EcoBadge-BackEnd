@@ -1,4 +1,4 @@
 # EcoBadge-BackEnd
  Back end of EcoBadge project made using MySQL and FastAPI
 
-API hosted on https://ecobadge.herokuapp.com/
+API hosted on
