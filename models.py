@@ -24,6 +24,8 @@ class Business(_db.Base):
     website = _sql.Column(_sql.String(255))
     cuisine = _sql.Column(_sql.String(255))
     scored = _sql.Column(_sql.Boolean)
+    uber = _sql.Column(_sql.String(255))
+    justeat = _sql.Column(_sql.String(255))
 
 class BusinessScore(_db.Base):
     __tablename__ = "businessScore"

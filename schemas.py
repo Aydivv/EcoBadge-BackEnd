@@ -100,6 +100,8 @@ class UnscoredBusiness(_pydantic.BaseModel):
     postcode: str
     description: str
     cuisine: str
+    uber: Optional[str] = None
+    justeat: Optional[str] = None
     class Config:
         orm_mode = True
 
@@ -115,6 +117,8 @@ class BusinessProfile(_pydantic.BaseModel):
     website: str
     scores: List[Score]
     reviews: List[Review]
+    uber: Optional[str] = None
+    justeat: Optional[str] = None
     class Config:
         orm_mode = True
     
@@ -127,5 +131,7 @@ class BusinessCreate(_pydantic.BaseModel):
     description: str
     website: str
     cuisine: str
+    uber: Optional[str] = None
+    justeat: Optional[str] = None
     class Config:
         orm_mode = True
